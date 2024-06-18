@@ -1,6 +1,8 @@
 import discord
 import bot_logic
 import random
+import requests
+import os
 from discord.ext import commands
 
 intents = discord.Intents.default()
@@ -14,7 +16,7 @@ async def on_ready():
 
 @bot.command()
 async def all(ctx):
-    await ctx.send('Wszystkie komendy:\n**$all** - Wyświetla wszystkie komendy\n**$hello** - Wita się\n**$bye** - Żegna się\n**$hehe #** - Pisze "he" # razy\n**$password #** - Generuje hasło o długości #\n**$h #** - Pisze "h " # razy\n**$coin** - Rzuca monetą\n**$emoji** - Generuje losową emotkę\n**$dice #** - Rzuca kostką o # ścianach')
+    await ctx.send('Wszystkie komendy:\n**$all** - Wyświetla wszystkie komendy\n**$hello** - Wita się\n**$bye** - Żegna się\n**$hehe #** - Pisze "he" # razy\n**$password #** - Generuje hasło o długości #\n**$h #** - Pisze "h " # razy\n**$coin** - Rzuca monetą\n**$emoji** - Generuje losową emotkę\n**$dice #** - Rzuca kostką o # ścianach\n**$guess #** - Zaczyna grę w zgadywanie od 1 do #\n**$joined** - Pisze kiedy użytkownik dołączył do serwera')
 
 @bot.command()
 async def hello(ctx):
@@ -48,4 +50,67 @@ async def emoji(ctx):
 async def dice(ctx, dice_sides = 6):
     await ctx.send(bot_logic.kostka(dice_sides))
 
-bot.run("tu idzie token")
+@bot.command()
+async def guess(ctx, max_guess = 10):
+    await ctx.send(f'Myślę o liczbie od 1 do {max_guess}')
+
+@bot.command()
+async def joined(ctx, member = discord.Member):
+    await ctx.send(f'{(member.name)} joined {discord.utils.format_dt(member.joined_at)}')
+
+@bot.command()
+async def meme(ctx):
+    rng = random.randint(0,999)
+    if rng < 500:
+        img_name = random.choice(os.listdir('discord/images/common'))
+        with open(f'discord/images/common/{img_name}', 'rb') as f:
+                picture = discord.File(f)
+        await ctx.send(file=picture)
+        await ctx.send('Popularny (50%)')
+    elif rng < 750:
+        img_name = random.choice(os.listdir('discord/images/uncommon'))
+        with open(f'discord/images/uncommon/{img_name}', 'rb') as f:
+                picture = discord.File(f)
+        await ctx.send(file=picture)
+        await ctx.send('Niepopularny (25%)')
+    elif rng < 900:
+        img_name = random.choice(os.listdir('discord/images/rare'))
+        with open(f'discord/images/rare/{img_name}', 'rb') as f:
+                picture = discord.File(f)
+        await ctx.send(file=picture)
+        await ctx.send('Rzadki (15%)')
+    elif rng < 980:
+        img_name = random.choice(os.listdir('discord/images/epic'))
+        with open(f'discord/images/epic/{img_name}', 'rb') as f:
+                picture = discord.File(f)
+        await ctx.send(file=picture)
+        await ctx.send('Epicki (8%)')
+    elif rng < 999:
+        img_name = random.choice(os.listdir('discord/images/legendary'))
+        with open(f'discord/images/legendary/{img_name}', 'rb') as f:
+                picture = discord.File(f)
+        await ctx.send(file=picture)
+        await ctx.send('Legendarny (1.9%)')
+    else:
+        with open(f'discord/images/mine/meme31', 'rb') as f:
+                picture = discord.File(f)
+        await ctx.send(file=picture)
+        await ctx.send('Mój mem! (0.1%)')
+
+def get_dog_image_url():    
+    url = 'https://random.dog/woof.json'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+
+@bot.command('dog')
+async def dog(ctx):
+    image_url = get_dog_image_url()
+    await ctx.send(image_url)
+
+@bot.command()
+async def eko(ctx):
+    await ctx.send(bot_logic.ekologia())
+
+bot.run("token")
