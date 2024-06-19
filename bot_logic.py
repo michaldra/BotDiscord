@@ -24,5 +24,5 @@ def kostka(sciany):
     return random.randint(1, sciany)
 
 def ekologia():
-    pomysly = ["pudełko z patyczków po lodach","stworek z plastikowej butelki","pokrowiec na telefon z tkaniny"]
+    pomysly = ["Pudełko z patyczków po lodach","Stworek z plastikowej butelki i nakrętek","Pokrowiec na telefon z tkaniny"]
     return random.choice(pomysly)
