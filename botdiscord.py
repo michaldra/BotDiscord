@@ -16,7 +16,20 @@ async def on_ready():
 
 @bot.command()
 async def all(ctx):
-    await ctx.send('Wszystkie komendy:\n**$all** - Wyświetla wszystkie komendy\n**$hello** - Wita się\n**$bye** - Żegna się\n**$hehe #** - Pisze "he" # razy\n**$password #** - Generuje hasło o długości #\n**$h #** - Pisze "h " # razy\n**$coin** - Rzuca monetą\n**$emoji** - Generuje losową emotkę\n**$dice #** - Rzuca kostką o # ścianach\n**$guess #** - Zaczyna grę w zgadywanie od 1 do #\n**$joined** - Pisze kiedy użytkownik dołączył do serwera')
+    await ctx.send('Wszystkie komendy:\n')
+    await ctx.send('**$hello** - Wita się\n')
+    await ctx.send('**$bye** - Żegna się\n')
+    await ctx.send('**$hehe #** - Pisze "he" # razy\n')
+    await ctx.send('**$password #** - Generuje hasło o długości #\n')
+    await ctx.send('**$h #** - Pisze "h " # razy\n')
+    await ctx.send('**$coin** - Rzuca monetą\n')
+    await ctx.send('**$emoji** - Generuje losową emotkę\n')
+    await ctx.send('**$dice #** - Rzuca kostką o # ścianach\n')
+    await ctx.send('**$guess #** - Zaczyna grę w zgadywanie od 1 do #\n')
+    await ctx.send('**$joined** - Pisze kiedy użytkownik dołączył do serwera')
+    await ctx.send('**$meme** - Wysyła losowy mem o programowaniu\n')
+    await ctx.send('**$dog** - Wysyła losowy obrazek z pieskami\n')
+    await ctx.send('**$eko** - Pisze losowy pomysł na zrobienie czegoś ze śmieci\n')
 
 @bot.command()
 async def hello(ctx):
@@ -104,7 +117,7 @@ def get_dog_image_url():
     return data['url']
 
 
-@bot.command('dog')
+@bot.command()
 async def dog(ctx):
     image_url = get_dog_image_url()
     await ctx.send(image_url)
